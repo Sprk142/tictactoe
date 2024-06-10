@@ -10,13 +10,23 @@ function Square({ value, onSquareClick }) {
 }
 
 export default function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
   //This is the board component, it maintains the state of the game.
 
   function handleClick(i) {
+    if (squares[i]) {
+      return;
+    }
     const nextSquares = squares.slice(); // Create a copy of the current state
-    nextSquares[i] = "X"; // Update the clicked square
+
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = ["0"];
+    } // Update the clicked square - which turn is it?
     setSquares(nextSquares); // Update the state with the new array
+    setXIsNext(!xIsNext);
   }
   //This function is called when a square it clicked.
 
